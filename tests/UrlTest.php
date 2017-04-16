@@ -1,8 +1,9 @@
 <?php
+use Facebook\WebDriver\WebDriverBy;
 use PHPUnit\Framework\TestCase;
 use PukiWikiTestUtils\PukiWikiController;
 
-class LinkTest extends TestCase
+class UrlTest extends TestCase
 {
     protected $pkwk_controller;
 
@@ -22,7 +23,10 @@ class LinkTest extends TestCase
         $this->pkwk_controller->close();
     }    
 
-    public function testUrl()
+    public function testTopUrlInMenu()
     {
+        $this->pkwk_controller->read("FrontPage");
+        $element = $this->pkwk_controller->getDriver()->findElement(WebDriverBy::linkText("トップ"));
+        $this->assertEquals($this->pkwk_controller->getUrl("FrontPage"), $element->getAttribute("href"));
     }
 }
