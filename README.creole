@@ -1,0 +1,10 @@
+= Unify Url PukiWiki Patch
+== 目的
+PukiWiki の URL 生成ルールを一ヵ所に整理するパッチを作成するプロジェクトです。
+
+Apache の mod_rewrite 等を使い短縮 URL 構成にする際に修正する箇所を局所化することが主な目的です。
+== 方針
+ * PukiWiki 内 URL を生成するメソッドを 1 つ実装する。仮に getPkwkUrl とする。
+ * PukiWiki 内 URL の生成は全て getPkwkUrl によって行うよう修正する。該当する箇所は以下の通り。
+ ** get_script_uri の呼び出し箇所
+ ** $script グローバル変数の使用箇所
