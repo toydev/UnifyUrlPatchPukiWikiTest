@@ -30,7 +30,7 @@ class PukiWikiController
     }
 
     function getPageUrl($page_name) {
-        return $this->getUrl('index.php?' . $page_name);
+        return $this->getUrl('index.php?' . $this->encodeUrl($page_name));
     }
 
     function readPage($page_name) {
@@ -48,5 +48,15 @@ class PukiWikiController
             $this->driver->close();
         }
         $this->driver = NULL;
+    }
+
+    function encodeUrl($page_name)
+    {
+        return preg_replace_callback('|[^/:]+|', array($this, 'encodeUrlCallback'), $page_name);
+    }
+
+    function encodeUrlCallback($matches)
+    {
+        return rawurlencode($matches[0]);
     }
 }
