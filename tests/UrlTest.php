@@ -31,4 +31,13 @@ class UrlTest extends TestCase
             $this->pkwk_controller->getUrl('index.php?FrontPage'),
             $element->getAttribute("href"));
     }
+
+    public function testEditUrlInMenu()
+    {
+        $this->pkwk_controller->readPage("FrontPage");
+        $element = $this->pkwk_controller->getDriver()->findElement(WebDriverBy::linkText("編集"));
+        $this->assertEquals(
+            $this->pkwk_controller->getUrl('index.php?cmd=edit&page=FrontPage'),
+            $element->getAttribute("href"));
+    }
 }
