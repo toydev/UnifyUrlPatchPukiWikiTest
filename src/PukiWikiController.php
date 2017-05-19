@@ -25,12 +25,16 @@ class PukiWikiController
         return $this->driver;
     }
 
-    function getUrl($page_name) {
-        return $this->pkwk_home_url->resolve('index.php?' . $page_name);
+    function getUrl($path) {
+        return $this->pkwk_home_url->resolve($path);
     }
 
-    function read($page_name) {
-        $this->driver->get($this->getUrl($page_name));
+    function getPageUrl($page_name) {
+        return $this->getUrl('index.php?' . $page_name);
+    }
+
+    function readPage($page_name) {
+        $this->driver->get($this->getPageUrl($page_name));
         $this->driver->wait(10)->until(
             WebDriverExpectedCondition::presenceOfAllElementsLocatedBy(
                 WebDriverBy::id('body')

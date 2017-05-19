@@ -25,8 +25,10 @@ class UrlTest extends TestCase
 
     public function testTopUrlInMenu()
     {
-        $this->pkwk_controller->read("FrontPage");
+        $this->pkwk_controller->readPage("FrontPage");
         $element = $this->pkwk_controller->getDriver()->findElement(WebDriverBy::linkText("トップ"));
-        $this->assertEquals($this->pkwk_controller->getUrl("FrontPage"), $element->getAttribute("href"));
+        $this->assertEquals(
+            $this->pkwk_controller->getUrl('index.php?FrontPage'),
+            $element->getAttribute("href"));
     }
 }
