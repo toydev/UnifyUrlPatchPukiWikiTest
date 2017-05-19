@@ -3,7 +3,7 @@ use Facebook\WebDriver\WebDriverBy;
 use PHPUnit\Framework\TestCase;
 use PukiWikiTestUtils\PukiWikiController;
 
-class UrlTest extends TestCase
+class MenuUrlTest extends TestCase
 {
     protected $pkwk_controller;
 
@@ -23,7 +23,7 @@ class UrlTest extends TestCase
         $this->pkwk_controller->close();
     }    
 
-    public function testTopUrlInMenu()
+    public function testTopUrl()
     {
         $this->pkwk_controller->readPage("FrontPage");
         $element = $this->pkwk_controller->getDriver()->findElement(WebDriverBy::linkText("トップ"));
@@ -32,7 +32,7 @@ class UrlTest extends TestCase
             $element->getAttribute("href"));
     }
 
-    public function testEditUrlInMenu()
+    public function testEditUrl()
     {
         $this->pkwk_controller->readPage("FrontPage");
         $element = $this->pkwk_controller->getDriver()->findElement(WebDriverBy::linkText("編集"));
