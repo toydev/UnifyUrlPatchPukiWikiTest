@@ -8,3 +8,28 @@ Apache の mod_rewrite 等を使い短縮 URL 構成にする際に修正する�
  * PukiWiki 内 URL の生成は全て getPkwkUrl によって行うよう修正する。該当する箇所は以下の通り。
  ** get_script_uri の呼び出し箇所
  ** $script グローバル変数の使用箇所
+ * Selenium による自動テストを実装し、パッチ適用前・パッチ適用後の動作互換性を確認できるようにする。
+== 修正箇所
+===lib/html.php
+ * テンプレートに表示されるリンク群の定義
+|add|
+|backup|
+|copy|
+|diff|
+|edit|
+|filelist|
+|freeze|
+|help|
+|list|
+|new|
+|rdf|
+|recent|
+|rename|
+|rss|
+|rss10|
+|rss20|
+|search|
+|top|
+|unfreeze|
+|upload|
+|logout|
