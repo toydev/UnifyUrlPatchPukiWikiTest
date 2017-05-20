@@ -19,7 +19,7 @@ Apache の mod_rewrite 等を使い短縮 URL 構成にする際に修正する�
 |backup||||
 |copy||||
 |diff||||
-|edit||||
+|edit|編集|済||
 |filelist||||
 |freeze|凍結|済||
 |help||||
