@@ -32,6 +32,10 @@ class MenuUrlTest extends TestCase
             ["添付", "index.php?plugin=attach&pcmd=upload&page=FrontPage"],
             ["リロード", "index.php"],
             ["新規", "index.php?plugin=newpage&refer=FrontPage"],
+            ["一覧", "index.php?cmd=list"],
+            ["単語検索", "index.php?cmd=search"],
+            ["最終更新", "index.php?RecentChanges"],
+            ["ヘルプ", "index.php?Help"],
         ];
     }
 
