@@ -36,32 +36,35 @@ class PukiWikiController
 
     function readPage($page_name) {
         $this->getAndWait($this->getPageUrl($page_name));
+        return preg_match("/^$page_name - /", $this->driver->getTitle());
     }
 
-    function createNewPage($page_name, $content, $refer_page_name = NULL) {
-        # 新規ページを開く
-        if (isset($refer_page_name)) {
-            $this->getAndWait($this->getUrl(
-                'index.php?plugin=newpage&refer=' . $this->encodeUrl($refer_page_name)));
-        } else {
-            $this->getAndWait($this->getUrl('index.php?plugin=newpage'));
+    function createPage($page_name, $content, $recreate = false) {
+        if ($recreate) {
+            $this->deletePage($page_name);
         }
 
-        try {
-            # ページ名を入れて、編集ボタンを押す
-            $this->driver->findElement(WebDriverBy::name("page"))->sendKeys($page_name);
-            $this->driver->findElement(WebDriverBy::tagName("form"))->submit();
-            $this->wait();
+        # 編集ページを開く
+        $this->getAndWait($this->getUrl(
+            'index.php?cmd=edit&page=' . $this->encodeUrl($page_name)));
 
-            # 内容を入れて、ページの更新ボタンを押す
-            $this->driver->findElement(WebDriverBy::name("msg"))->sendKeys($content);
-            $this->driver->findElement(WebDriverBy::name("write"))->click();
-            $this->wait();
+        # 内容を入れて、ページの更新ボタンを押す
+        $this->driver->findElement(WebDriverBy::name("msg"))
+            ->clear()->sendKeys($content);
+        $this->driver->findElement(WebDriverBy::name("write"))->click();
+        $this->wait();
+    }
 
-            return true;
-        } catch (NoSuchElementException $e) {
-            return false;
-        }
+    function deletePage($page_name) {
+        $this->createPage($page_name, "");
+    }
+
+    function findElement($locator) {
+        return $this->driver->findElement($locator);
+    }
+
+    function findElements($locator) {
+        return $this->driver->findElements($locator);
     }
 
     function close() {

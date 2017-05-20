@@ -26,22 +26,24 @@ class MenuUrlTest extends TestCase
     public function testTopUrl()
     {
         $this->pkwk_controller->readPage("FrontPage");
-        $element = $this->pkwk_controller->getDriver()->findElement(WebDriverBy::linkText("トップ"));
         $this->assertEquals(
             $this->pkwk_controller->getUrl('index.php?FrontPage'),
-            $element->getAttribute("href"));
+            $this->pkwk_controller->findElement(WebDriverBy::linkText("トップ"))->getAttribute("href"));
     }
 
     public function testEditUrl()
     {
         $this->pkwk_controller->readPage("FrontPage");
-        $element = $this->pkwk_controller->getDriver()->findElement(WebDriverBy::linkText("編集"));
         $this->assertEquals(
             $this->pkwk_controller->getUrl('index.php?cmd=edit&page=FrontPage'),
-            $element->getAttribute("href"));
+            $this->pkwk_controller->findElement(WebDriverBy::linkText("編集"))->getAttribute("href"));
     }
 
     public function testFreezeUrl() {
-        $this->assertTrue($this->pkwk_controller->createNewPage("Test", "Test"));
+        $this->pkwk_controller->createPage("FreezeTestPage", "テスト");
+        $this->pkwk_controller->readPage("FreezeTestPage");
+        $this->assertEquals(
+            $this->pkwk_controller->getUrl('index.php?cmd=freeze&page=FreezeTestPage'),
+            $this->pkwk_controller->findElement(WebDriverBy::linkText("凍結"))->getAttribute("href"));
     }
 }
