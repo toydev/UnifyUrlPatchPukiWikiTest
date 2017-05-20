@@ -40,4 +40,8 @@ class MenuUrlTest extends TestCase
             $this->pkwk_controller->getUrl('index.php?cmd=edit&page=FrontPage'),
             $element->getAttribute("href"));
     }
+
+    public function testFreezeUrl() {
+        $this->assertTrue($this->pkwk_controller->createNewPage("Test", "Test"));
+    }
 }
