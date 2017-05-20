@@ -24,7 +24,7 @@ Apache の mod_rewrite 等を使い短縮 URL 構成にする際に修正する�
 |freeze|凍結|済||
 |help||||
 |list||||
-|new||||
+|new|新規|済||
 |rdf||||
 |recent||||
 |rename||||
