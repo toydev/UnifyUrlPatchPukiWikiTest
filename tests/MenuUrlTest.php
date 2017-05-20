@@ -60,7 +60,8 @@ class MenuUrlTest extends TestCase
 
     public function freezeMenuProvider() {
         return [
-            ["FreezeTestPage", "凍結", "index.php?cmd=freeze&page=FreezeTestPage",]
+            ["FreezeTestPage", "凍結", "index.php?cmd=freeze&page=FreezeTestPage"],
+            ["階層1/日本語ページ", "凍結", "index.php?cmd=freeze&page=%E9%9A%8E%E5%B1%A41/%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%83%9A%E3%83%BC%E3%82%B8"],
         ];
     }
 
@@ -77,7 +78,8 @@ class MenuUrlTest extends TestCase
 
     public function unfreezeMenuProvider() {
         return [
-            ["UnfreezeTestPage", "凍結解除", "index.php?cmd=unfreeze&page=UnfreezeTestPage",]
+            ["UnfreezeTestPage", "凍結解除", "index.php?cmd=unfreeze&page=UnfreezeTestPage"],
+            ["階層1/日本語ページ", "凍結解除", "index.php?cmd=unfreeze&page=%E9%9A%8E%E5%B1%A41/%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%83%9A%E3%83%BC%E3%82%B8"],
         ];
     }
 
