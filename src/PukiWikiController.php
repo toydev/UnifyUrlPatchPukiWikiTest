@@ -9,13 +9,13 @@ use Facebook\WebDriver\WebDriverExpectedCondition;
 
 class PukiWikiController
 {
-    function __construct($web_driver_url, $capabilities, $pkwk_home_url)
-    {
+    function __construct($web_driver_url, $capabilities, $pkwk_home_url, $pkwk_adminpass) {
         $this->driver = RemoteWebDriver::create(
             $web_driver_url,
             $capabilities,
             5000);
         $this->pkwk_home_url = new Net_URL2($pkwk_home_url);
+        $this->pkwk_adminpass = $pkwk_adminpass;
     }
 
     function __destruct() {
@@ -57,6 +57,21 @@ class PukiWikiController
 
     function deletePage($page_name) {
         $this->createPage($page_name, "");
+    }
+
+    function freezePage($page_name) {
+        $this->getAndWait($this->getUrl(
+            'index.php?cmd=freeze&page=' . $this->encodeUrl($page_name)));
+        try {
+            $this->driver->findElement(WebDriverBy::name("pass"))
+                ->clear()->sendKeys($this->pkwk_adminpass);
+            $this->driver->findElement(WebDriverBy::name("ok"))->click();
+            $this->wait();
+
+            return true;
+        } catch (NoSuchElementException $e) {
+            return false;
+        }
     }
 
     function findElement($locator) {

@@ -12,11 +12,13 @@ class MenuUrlTest extends TestCase
         global $SELENIUM_SERVER_URL;
         global $SELENIUM_CAPABILITIES;
         global $PKWK_HOME_URL;
+        global $PKWK_ADMINPASS;
         
         $this->pkwk_controller = new PukiWikiController(
             $SELENIUM_SERVER_URL,
             $SELENIUM_CAPABILITIES,
-            $PKWK_HOME_URL);
+            $PKWK_HOME_URL,
+            $PKWK_ADMINPASS);
     }
 
     protected function tearDown() {
@@ -50,12 +52,21 @@ class MenuUrlTest extends TestCase
     }
 
 
-    public function testFreezeUrl() {
+    public function testFreeze() {
         $this->pkwk_controller->createPage("FreezeTestPage", "テスト");
         $this->pkwk_controller->readPage("FreezeTestPage");
         $this->assertEquals(
             $this->pkwk_controller->getUrl('index.php?cmd=freeze&page=FreezeTestPage'),
             $this->pkwk_controller->findElement(WebDriverBy::linkText("凍結"))->getAttribute("href"));
+    }
+
+    public function testUnfreeze() {
+        $this->pkwk_controller->createPage("UnfreezeTestPage", "テスト");
+        $this->pkwk_controller->freezePage("UnfreezeTestPage", "テスト");
+        $this->pkwk_controller->readPage("UnfreezeTestPage");
+        $this->assertEquals(
+            $this->pkwk_controller->getUrl('index.php?cmd=unfreeze&page=UnfreezeTestPage'),
+            $this->pkwk_controller->findElement(WebDriverBy::linkText("凍結解除"))->getAttribute("href"));
     }
 
     public function testReload() {
