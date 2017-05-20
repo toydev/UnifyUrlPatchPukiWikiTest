@@ -47,7 +47,7 @@ class MenuUrlTest extends TestCase
     public function testFrontPageMenu($targetLinkText, $expectedUrl) {
         $this->pkwk_controller->readPage("FrontPage");
         $this->assertEquals(
-            $this->pkwk_controller->getUrl($expectedUrl),
+            strval($this->pkwk_controller->getUrl($expectedUrl)),
             $this->pkwk_controller->findElement(WebDriverBy::linkText($targetLinkText))->getAttribute("href"));
     }
 
@@ -64,16 +64,25 @@ class MenuUrlTest extends TestCase
         $this->pkwk_controller->createPage($pageName, "BODY");
         $this->pkwk_controller->readPage($pageName);
         $this->assertEquals(
-            $this->pkwk_controller->getUrl($expectedUrl),
+            strval($this->pkwk_controller->getUrl($expectedUrl)),
             $this->pkwk_controller->findElement(WebDriverBy::linkText($targetLinkText))->getAttribute("href"));
     }
 
-    public function testUnfreeze() {
-        $this->pkwk_controller->createPage("UnfreezeTestPage", "テスト");
-        $this->pkwk_controller->freezePage("UnfreezeTestPage", "テスト");
-        $this->pkwk_controller->readPage("UnfreezeTestPage");
+    public function unfreezeMenuProvider() {
+        return [
+            ["UnfreezeTestPage", "凍結解除", "index.php?cmd=unfreeze&page=UnfreezeTestPage",]
+        ];
+    }
+
+    /**
+     * @dataProvider unfreezeMenuProvider
+     */
+    public function testUnfreeze($pageName, $targetLinkText, $expectedUrl) {
+        $this->pkwk_controller->createPage($pageName, "BODY");
+        $this->pkwk_controller->freezePage($pageName);
+        $this->pkwk_controller->readPage($pageName);
         $this->assertEquals(
-            $this->pkwk_controller->getUrl('index.php?cmd=unfreeze&page=UnfreezeTestPage'),
-            $this->pkwk_controller->findElement(WebDriverBy::linkText("凍結解除"))->getAttribute("href"));
+            strval($this->pkwk_controller->getUrl($expectedUrl)),
+            $this->pkwk_controller->findElement(WebDriverBy::linkText($targetLinkText))->getAttribute("href"));
     }
 }
