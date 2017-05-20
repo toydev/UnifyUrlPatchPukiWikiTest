@@ -60,4 +60,11 @@ class MenuUrlTest extends TestCase
             $this->pkwk_controller->getUrl('index.php?cmd=backup&page=FrontPage'),
             $this->pkwk_controller->findElement(WebDriverBy::linkText("バックアップ"))->getAttribute("href"));
     }
+
+    public function testFileUpload() {
+        $this->pkwk_controller->readPage("FrontPage");
+        $this->assertEquals(
+            $this->pkwk_controller->getUrl('index.php?plugin=attach&pcmd=upload&page=FrontPage'),
+            $this->pkwk_controller->findElement(WebDriverBy::linkText("添付"))->getAttribute("href"));         
+    }
 }
