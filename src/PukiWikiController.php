@@ -48,6 +48,18 @@ class PukiWikiController
         $this->getAndWait($this->getUrl(
             'index.php?cmd=edit&page=' . $this->encodeUrl($page_name)));
 
+        # 凍結解除がある場合は先に解除する
+        $unfreeze = $this->findElement(WebDriverBy::linkText("凍結解除"));
+        if (isset($unfreeze)) {
+            $unfreeze->click();
+            $this->wait();
+
+            $this->driver->findElement(WebDriverBy::name("pass"))
+                ->clear()->sendKeys($this->pkwk_adminpass);
+            $this->driver->findElement(WebDriverBy::name("ok"))->click();
+            $this->wait();
+        }
+
         # 内容を入れて、ページの更新ボタンを押す
         $this->driver->findElement(WebDriverBy::name("msg"))
             ->clear()->sendKeys($content);
