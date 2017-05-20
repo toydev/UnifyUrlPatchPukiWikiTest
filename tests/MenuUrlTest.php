@@ -27,25 +27,32 @@ class MenuUrlTest extends TestCase
 
     public function frontPageMenuProvider() {
         return [
-            ["トップ", "index.php?FrontPage"],
-            ["編集", "index.php?cmd=edit&page=FrontPage"],
-            ["差分", "index.php?cmd=diff&page=FrontPage"],
-            ["バックアップ", "index.php?cmd=backup&page=FrontPage"],
-            ["添付", "index.php?plugin=attach&pcmd=upload&page=FrontPage"],
-            ["リロード", "index.php"],
-            ["新規", "index.php?plugin=newpage&refer=FrontPage"],
-            ["一覧", "index.php?cmd=list"],
-            ["単語検索", "index.php?cmd=search"],
-            ["最終更新", "index.php?RecentChanges"],
-            ["ヘルプ", "index.php?Help"],
+            ["FrontPage", "トップ", "index.php?FrontPage"],
+            ["FrontPage", "編集", "index.php?cmd=edit&page=FrontPage"],
+            ["FrontPage", "差分", "index.php?cmd=diff&page=FrontPage"],
+            ["FrontPage", "バックアップ", "index.php?cmd=backup&page=FrontPage"],
+            ["FrontPage", "添付", "index.php?plugin=attach&pcmd=upload&page=FrontPage"],
+            ["FrontPage", "リロード", "index.php"],
+            ["FrontPage", "新規", "index.php?plugin=newpage&refer=FrontPage"],
+            ["FrontPage", "一覧", "index.php?cmd=list"],
+            ["FrontPage", "単語検索", "index.php?cmd=search"],
+            ["FrontPage", "最終更新", "index.php?RecentChanges"],
+            ["FrontPage", "ヘルプ", "index.php?Help"],
+            ["階層1/日本語ページ", "編集", "index.php?cmd=edit&page=%E9%9A%8E%E5%B1%A41/%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%83%9A%E3%83%BC%E3%82%B8"],
+            ["階層1/日本語ページ", "差分", "index.php?cmd=diff&page=%E9%9A%8E%E5%B1%A41/%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%83%9A%E3%83%BC%E3%82%B8"],
+            ["階層1/日本語ページ", "バックアップ", "index.php?cmd=backup&page=%E9%9A%8E%E5%B1%A41/%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%83%9A%E3%83%BC%E3%82%B8"],
+            ["階層1/日本語ページ", "添付", "index.php?plugin=attach&pcmd=upload&page=%E9%9A%8E%E5%B1%A41/%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%83%9A%E3%83%BC%E3%82%B8"],
+            ["階層1/日本語ページ", "リロード", "index.php?%E9%9A%8E%E5%B1%A41/%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%83%9A%E3%83%BC%E3%82%B8"],
+            ["階層1/日本語ページ", "新規", "index.php?plugin=newpage&refer=%E9%9A%8E%E5%B1%A41/%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%83%9A%E3%83%BC%E3%82%B8"],
         ];
     }
 
     /**
      * @dataProvider frontPageMenuProvider
      */
-    public function testFrontPageMenu($targetLinkText, $expectedUrl) {
-        $this->pkwkController->readPage("FrontPage");
+    public function testFrontPageMenu($pageName, $targetLinkText, $expectedUrl) {
+        $this->pkwkController->createPage($pageName, "BODY");
+        $this->pkwkController->readPage($pageName);
         $this->assertEquals(
             strval($this->pkwkController->getUrl($expectedUrl)),
             $this->pkwkController->findElement(WebDriverBy::linkText($targetLinkText))->getAttribute("href"));

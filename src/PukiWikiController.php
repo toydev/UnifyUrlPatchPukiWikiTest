@@ -36,7 +36,6 @@ class PukiWikiController
 
     function readPage($pagename) {
         $this->getAndWait($this->getPageUrl($pagename));
-        return preg_match("/^$pagename - /", $this->driver->getTitle());
     }
 
     function createPage($pagename, $content, $recreate = false) {
