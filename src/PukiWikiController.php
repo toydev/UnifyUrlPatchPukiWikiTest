@@ -34,38 +34,42 @@ class PukiWikiController
         return $this->getUrl('index.php?' . $this->encodeUrl($pagename));
     }
 
+    # ページを読む。
     function readPage($pagename) {
         $this->getAndWait($this->getPageUrl($pagename));
     }
 
-    function createPage($pagename, $content, $recreate = false) {
-        if ($recreate) {
-            $this->deletePage($pagename);
-        }
-
+    # ページを作る。
+    function createPage($pagename, $content, $force = true) {
         # 編集ページを開く
         $this->getAndWait($this->getUrl(
             'index.php?cmd=edit&page=' . $this->encodeUrl($pagename)));
 
         # 凍結解除がある場合は先に解除する
-        try {
-            $unfreeze = $this->findElement(WebDriverBy::linkText("凍結解除"));
-            $unfreeze->click();
-            $this->wait();
+        if ($force) {
+            try {
+                $unfreeze = $this->findElement(WebDriverBy::linkText("凍結解除"));
+                $unfreeze->click();
+                $this->wait();
 
-            $this->driver->findElement(WebDriverBy::name("pass"))
-                ->clear()->sendKeys($this->pkwkAdminpass);
-            $this->driver->findElement(WebDriverBy::name("ok"))->click();
-            $this->wait();
-        } catch (NoSuchElementException $e) {
-            // Ignore
+                $this->driver->findElement(WebDriverBy::name("pass"))
+                    ->clear()->sendKeys($this->pkwkAdminpass);
+                $this->driver->findElement(WebDriverBy::name("ok"))->click();
+                $this->wait();
+            } catch (NoSuchElementException $e) {
+                return false;
+            }
         }
 
-        # 内容を入れて、ページの更新ボタンを押す
-        $this->driver->findElement(WebDriverBy::name("msg"))
-            ->clear()->sendKeys($content);
-        $this->driver->findElement(WebDriverBy::name("write"))->click();
-        $this->wait();
+        # 内容を入れてページの更新ボタンを押す
+        try {
+            $this->driver->findElement(WebDriverBy::name("msg"))
+                ->clear()->sendKeys($content);
+            $this->driver->findElement(WebDriverBy::name("write"))->click();
+            $this->wait();
+        } catch (NoSuchElementException $e) {
+            return false;
+        }
     }
 
     function deletePage($pagename) {
