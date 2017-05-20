@@ -35,5 +35,5 @@ Apache の mod_rewrite 等を使い短縮 URL 構成にする際に修正する�
 |top|トップ|済||
 |unfreeze|凍結解除|済||
 |upload|添付|済||
-|login||||
+|login|ログイン|済||
 |logout||||
