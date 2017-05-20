@@ -68,12 +68,4 @@ class MenuUrlTest extends TestCase
             $this->pkwk_controller->getUrl('index.php?cmd=unfreeze&page=UnfreezeTestPage'),
             $this->pkwk_controller->findElement(WebDriverBy::linkText("凍結解除"))->getAttribute("href"));
     }
-
-    public function testReload() {
-        $this->pkwk_controller->createPage("ReloadTestPage", "テスト");
-        $this->pkwk_controller->readPage("ReloadTestPage");
-        $this->assertEquals(
-            $this->pkwk_controller->getUrl('index.php?ReloadTestPage'),
-            $this->pkwk_controller->findElement(WebDriverBy::linkText("リロード"))->getAttribute("href"));         
-    }
 }
