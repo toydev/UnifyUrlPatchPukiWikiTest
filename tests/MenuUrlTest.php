@@ -23,21 +23,28 @@ class MenuUrlTest extends TestCase
         $this->pkwk_controller->close();
     }    
 
-    public function testTopUrl()
-    {
-        $this->pkwk_controller->readPage("FrontPage");
-        $this->assertEquals(
-            $this->pkwk_controller->getUrl('index.php?FrontPage'),
-            $this->pkwk_controller->findElement(WebDriverBy::linkText("トップ"))->getAttribute("href"));
+    public function frontPageMenuProvider() {
+        return [
+            ["トップ", "index.php?FrontPage"],
+            ["編集", "index.php?cmd=edit&page=FrontPage"],
+            ["差分", "index.php?cmd=diff&page=FrontPage"],
+            ["バックアップ", "index.php?cmd=backup&page=FrontPage"],
+            ["添付", "index.php?plugin=attach&pcmd=upload&page=FrontPage"],
+            ["リロード", "index.php"],
+            ["新規", "index.php?plugin=newpage&refer=FrontPage"],
+        ];
     }
 
-    public function testEditUrl()
-    {
+    /**
+     * @dataProvider frontPageMenuProvider
+     */
+    public function testFrontPageMenu($targetLinkText, $expectedUrl) {
         $this->pkwk_controller->readPage("FrontPage");
         $this->assertEquals(
-            $this->pkwk_controller->getUrl('index.php?cmd=edit&page=FrontPage'),
-            $this->pkwk_controller->findElement(WebDriverBy::linkText("編集"))->getAttribute("href"));
+            $this->pkwk_controller->getUrl($expectedUrl),
+            $this->pkwk_controller->findElement(WebDriverBy::linkText($targetLinkText))->getAttribute("href"));
     }
+
 
     public function testFreezeUrl() {
         $this->pkwk_controller->createPage("FreezeTestPage", "テスト");
@@ -47,46 +54,11 @@ class MenuUrlTest extends TestCase
             $this->pkwk_controller->findElement(WebDriverBy::linkText("凍結"))->getAttribute("href"));
     }
 
-    public function testDiffUrl() {
-        $this->pkwk_controller->readPage("FrontPage");
-        $this->assertEquals(
-            $this->pkwk_controller->getUrl('index.php?cmd=diff&page=FrontPage'),
-            $this->pkwk_controller->findElement(WebDriverBy::linkText("差分"))->getAttribute("href"));
-    }
-
-    public function testBackup() {
-        $this->pkwk_controller->readPage("FrontPage");
-        $this->assertEquals(
-            $this->pkwk_controller->getUrl('index.php?cmd=backup&page=FrontPage'),
-            $this->pkwk_controller->findElement(WebDriverBy::linkText("バックアップ"))->getAttribute("href"));
-    }
-
-    public function testFileUpload() {
-        $this->pkwk_controller->readPage("FrontPage");
-        $this->assertEquals(
-            $this->pkwk_controller->getUrl('index.php?plugin=attach&pcmd=upload&page=FrontPage'),
-            $this->pkwk_controller->findElement(WebDriverBy::linkText("添付"))->getAttribute("href"));         
-    }
-
     public function testReload() {
         $this->pkwk_controller->createPage("ReloadTestPage", "テスト");
         $this->pkwk_controller->readPage("ReloadTestPage");
         $this->assertEquals(
             $this->pkwk_controller->getUrl('index.php?ReloadTestPage'),
             $this->pkwk_controller->findElement(WebDriverBy::linkText("リロード"))->getAttribute("href"));         
-    }
-
-    public function testReloadFrontPage() {
-        $this->pkwk_controller->readPage("FrontPage");
-        $this->assertEquals(
-            $this->pkwk_controller->getUrl('index.php'),
-            $this->pkwk_controller->findElement(WebDriverBy::linkText("リロード"))->getAttribute("href"));         
-    }
-
-    public function testNew() {
-        $this->pkwk_controller->readPage("FrontPage");
-        $this->assertEquals(
-            $this->pkwk_controller->getUrl('index.php?plugin=newpage&refer=FrontPage'),
-            $this->pkwk_controller->findElement(WebDriverBy::linkText("新規"))->getAttribute("href"));         
     }
 }
