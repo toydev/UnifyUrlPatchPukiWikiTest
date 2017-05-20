@@ -5,7 +5,7 @@ use PukiWikiTestUtils\PukiWikiController;
 
 class MenuUrlTest extends TestCase
 {
-    protected $pkwk_controller;
+    protected $pkwkController;
 
     protected function setUp()
     {
@@ -14,7 +14,7 @@ class MenuUrlTest extends TestCase
         global $PKWK_HOME_URL;
         global $PKWK_ADMINPASS;
         
-        $this->pkwk_controller = new PukiWikiController(
+        $this->pkwkController = new PukiWikiController(
             $SELENIUM_SERVER_URL,
             $SELENIUM_CAPABILITIES,
             $PKWK_HOME_URL,
@@ -22,7 +22,7 @@ class MenuUrlTest extends TestCase
     }
 
     protected function tearDown() {
-        $this->pkwk_controller->close();
+        $this->pkwkController->close();
     }    
 
     public function frontPageMenuProvider() {
@@ -45,10 +45,10 @@ class MenuUrlTest extends TestCase
      * @dataProvider frontPageMenuProvider
      */
     public function testFrontPageMenu($targetLinkText, $expectedUrl) {
-        $this->pkwk_controller->readPage("FrontPage");
+        $this->pkwkController->readPage("FrontPage");
         $this->assertEquals(
-            strval($this->pkwk_controller->getUrl($expectedUrl)),
-            $this->pkwk_controller->findElement(WebDriverBy::linkText($targetLinkText))->getAttribute("href"));
+            strval($this->pkwkController->getUrl($expectedUrl)),
+            $this->pkwkController->findElement(WebDriverBy::linkText($targetLinkText))->getAttribute("href"));
     }
 
     public function freezeMenuProvider() {
@@ -61,11 +61,11 @@ class MenuUrlTest extends TestCase
      * @dataProvider freezeMenuProvider
      */
     public function testFreeze($pageName, $targetLinkText, $expectedUrl) {
-        $this->pkwk_controller->createPage($pageName, "BODY");
-        $this->pkwk_controller->readPage($pageName);
+        $this->pkwkController->createPage($pageName, "BODY");
+        $this->pkwkController->readPage($pageName);
         $this->assertEquals(
-            strval($this->pkwk_controller->getUrl($expectedUrl)),
-            $this->pkwk_controller->findElement(WebDriverBy::linkText($targetLinkText))->getAttribute("href"));
+            strval($this->pkwkController->getUrl($expectedUrl)),
+            $this->pkwkController->findElement(WebDriverBy::linkText($targetLinkText))->getAttribute("href"));
     }
 
     public function unfreezeMenuProvider() {
@@ -78,11 +78,11 @@ class MenuUrlTest extends TestCase
      * @dataProvider unfreezeMenuProvider
      */
     public function testUnfreeze($pageName, $targetLinkText, $expectedUrl) {
-        $this->pkwk_controller->createPage($pageName, "BODY");
-        $this->pkwk_controller->freezePage($pageName);
-        $this->pkwk_controller->readPage($pageName);
+        $this->pkwkController->createPage($pageName, "BODY");
+        $this->pkwkController->freezePage($pageName);
+        $this->pkwkController->readPage($pageName);
         $this->assertEquals(
-            strval($this->pkwk_controller->getUrl($expectedUrl)),
-            $this->pkwk_controller->findElement(WebDriverBy::linkText($targetLinkText))->getAttribute("href"));
+            strval($this->pkwkController->getUrl($expectedUrl)),
+            $this->pkwkController->findElement(WebDriverBy::linkText($targetLinkText))->getAttribute("href"));
     }
 }

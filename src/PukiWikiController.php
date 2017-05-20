@@ -9,13 +9,13 @@ use Facebook\WebDriver\WebDriverExpectedCondition;
 
 class PukiWikiController
 {
-    function __construct($web_driver_url, $capabilities, $pkwk_home_url, $pkwk_adminpass) {
+    function __construct($webDriverUrl, $capabilities, $pkwkHomeUrl, $pkwkAdminpass) {
         $this->driver = RemoteWebDriver::create(
-            $web_driver_url,
+            $webDriverUrl,
             $capabilities,
             5000);
-        $this->pkwk_home_url = new Net_URL2($pkwk_home_url);
-        $this->pkwk_adminpass = $pkwk_adminpass;
+        $this->pkwkHomeUrl = new Net_URL2($pkwkHomeUrl);
+        $this->pkwkAdminpass = $pkwkAdminpass;
     }
 
     function __destruct() {
@@ -27,26 +27,26 @@ class PukiWikiController
     }
 
     function getUrl($path) {
-        return $this->pkwk_home_url->resolve($path);
+        return $this->pkwkHomeUrl->resolve($path);
     }
 
-    function getPageUrl($page_name) {
-        return $this->getUrl('index.php?' . $this->encodeUrl($page_name));
+    function getPageUrl($pagename) {
+        return $this->getUrl('index.php?' . $this->encodeUrl($pagename));
     }
 
-    function readPage($page_name) {
-        $this->getAndWait($this->getPageUrl($page_name));
-        return preg_match("/^$page_name - /", $this->driver->getTitle());
+    function readPage($pagename) {
+        $this->getAndWait($this->getPageUrl($pagename));
+        return preg_match("/^$pagename - /", $this->driver->getTitle());
     }
 
-    function createPage($page_name, $content, $recreate = false) {
+    function createPage($pagename, $content, $recreate = false) {
         if ($recreate) {
-            $this->deletePage($page_name);
+            $this->deletePage($pagename);
         }
 
         # 編集ページを開く
         $this->getAndWait($this->getUrl(
-            'index.php?cmd=edit&page=' . $this->encodeUrl($page_name)));
+            'index.php?cmd=edit&page=' . $this->encodeUrl($pagename)));
 
         # 凍結解除がある場合は先に解除する
         try {
@@ -55,7 +55,7 @@ class PukiWikiController
             $this->wait();
 
             $this->driver->findElement(WebDriverBy::name("pass"))
-                ->clear()->sendKeys($this->pkwk_adminpass);
+                ->clear()->sendKeys($this->pkwkAdminpass);
             $this->driver->findElement(WebDriverBy::name("ok"))->click();
             $this->wait();
         } catch (NoSuchElementException $e) {
@@ -69,16 +69,16 @@ class PukiWikiController
         $this->wait();
     }
 
-    function deletePage($page_name) {
-        $this->createPage($page_name, "");
+    function deletePage($pagename) {
+        $this->createPage($pagename, "");
     }
 
-    function freezePage($page_name) {
+    function freezePage($pagename) {
         $this->getAndWait($this->getUrl(
-            'index.php?cmd=freeze&page=' . $this->encodeUrl($page_name)));
+            'index.php?cmd=freeze&page=' . $this->encodeUrl($pagename)));
         try {
             $this->driver->findElement(WebDriverBy::name("pass"))
-                ->clear()->sendKeys($this->pkwk_adminpass);
+                ->clear()->sendKeys($this->pkwkAdminpass);
             $this->driver->findElement(WebDriverBy::name("ok"))->click();
             $this->wait();
 
@@ -117,9 +117,9 @@ class PukiWikiController
         );
     }
 
-    function encodeUrl($page_name)
+    function encodeUrl($pagename)
     {
-        return preg_replace_callback('|[^/:]+|', array($this, 'encodeUrlCallback'), $page_name);
+        return preg_replace_callback('|[^/:]+|', array($this, 'encodeUrlCallback'), $pagename);
     }
 
     function encodeUrlCallback($matches)
