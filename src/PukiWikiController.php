@@ -91,6 +91,31 @@ class PukiWikiController
         }
     }
 
+    function login($username, $password, $pagename = NULL) {
+        $this->logout();
+
+        if (isset($pagename)) {
+            $this->getAndWait($this->getUrl(
+                'index.php?plugin=login&page=') . $this->encodeUrl($pagename));
+        } else {
+            $this->getAndWait($this->getUrl('index.php?plugin=login'));
+        }
+
+        $this->driver->findElement(WebDriverBy::name("username"))
+            ->sendKeys($this->username);
+        $this->driver->findElement(WebDriverBy::name("password"))
+            ->sendKeys($this->password);
+    }
+
+    function logout($pagename = NULL) {
+        if (isset($pagename)) {
+            $this->getAndWait($this->getUrl(
+                'index.php?plugin=logout&page=') . $this->encodeUrl($pagename));
+        } else {
+            $this->getAndWait($this->getUrl('index.php?plugin=logout'));
+        }
+    }
+
     function findElement($locator) {
         return $this->driver->findElement($locator);
     }

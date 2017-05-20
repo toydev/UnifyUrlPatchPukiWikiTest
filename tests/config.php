@@ -12,3 +12,7 @@ $PKWK_HOME_URL = "http://192.168.33.10/PukiWiki-1.5.1/";
 
 // Target PukiWiki Admin Password
 $PKWK_ADMINPASS = "pass";
+
+// Testuser
+$PKWK_TESTUSERNAME = "testuser";
+$PKWK_TESTUSERPASS = "pass";

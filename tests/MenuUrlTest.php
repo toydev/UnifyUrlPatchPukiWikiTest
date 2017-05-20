@@ -94,4 +94,22 @@ class MenuUrlTest extends TestCase
             strval($this->pkwkController->getUrl($expectedUrl)),
             $this->pkwkController->findElement(WebDriverBy::linkText($targetLinkText))->getAttribute("href"));
     }
+
+    public function loginMenuProvider() {
+        return [
+            ["FrontPage", "ログイン", "index.php?plugin=loginform&pcmd=login&page=FrontPage"],
+            ["階層1/日本語ページ", "ログイン", "index.php?plugin=loginform&pcmd=login&page=%E9%9A%8E%E5%B1%A41/%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%83%9A%E3%83%BC%E3%82%B8"],
+        ];
+    }
+
+    /**
+     * @dataProvider loginMenuProvider
+     */
+    public function testLogin($pageName, $targetLinkText, $expectedUrl) {
+        $this->pkwkController->logout();
+        $this->pkwkController->readPage($pageName);
+        $this->assertEquals(
+            strval($this->pkwkController->getUrl($expectedUrl)),
+            $this->pkwkController->findElement(WebDriverBy::linkText($targetLinkText))->getAttribute("href"));
+    }
 }
