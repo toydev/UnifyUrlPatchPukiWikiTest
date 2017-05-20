@@ -33,6 +33,7 @@ Apache の mod_rewrite 等を使い短縮 URL 構成にする際に修正する�
 |rss20||||
 |search|単語検索|済||
 |top|トップ|済||
-|unfreeze||||
+|unfreeze|凍結解除|済||
 |upload|添付|済||
+|login||||
 |logout||||
