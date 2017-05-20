@@ -51,13 +51,21 @@ class MenuUrlTest extends TestCase
             $this->pkwk_controller->findElement(WebDriverBy::linkText($targetLinkText))->getAttribute("href"));
     }
 
+    public function freezeMenuProvider() {
+        return [
+            ["FreezeTestPage", "凍結", "index.php?cmd=freeze&page=FreezeTestPage",]
+        ];
+    }
 
-    public function testFreeze() {
-        $this->pkwk_controller->createPage("FreezeTestPage", "テスト");
-        $this->pkwk_controller->readPage("FreezeTestPage");
+    /**
+     * @dataProvider freezeMenuProvider
+     */
+    public function testFreeze($pageName, $targetLinkText, $expectedUrl) {
+        $this->pkwk_controller->createPage($pageName, "BODY");
+        $this->pkwk_controller->readPage($pageName);
         $this->assertEquals(
-            $this->pkwk_controller->getUrl('index.php?cmd=freeze&page=FreezeTestPage'),
-            $this->pkwk_controller->findElement(WebDriverBy::linkText("凍結"))->getAttribute("href"));
+            $this->pkwk_controller->getUrl($expectedUrl),
+            $this->pkwk_controller->findElement(WebDriverBy::linkText($targetLinkText))->getAttribute("href"));
     }
 
     public function testUnfreeze() {
