@@ -82,4 +82,11 @@ class MenuUrlTest extends TestCase
             $this->pkwk_controller->getUrl('index.php'),
             $this->pkwk_controller->findElement(WebDriverBy::linkText("リロード"))->getAttribute("href"));         
     }
+
+    public function testNew() {
+        $this->pkwk_controller->readPage("FrontPage");
+        $this->assertEquals(
+            $this->pkwk_controller->getUrl('index.php?plugin=newpage&refer=FrontPage'),
+            $this->pkwk_controller->findElement(WebDriverBy::linkText("新規"))->getAttribute("href"));         
+    }
 }
