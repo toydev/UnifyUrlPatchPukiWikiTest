@@ -112,4 +112,25 @@ class MenuUrlTest extends TestCase
             strval($this->pkwkController->getUrl($expectedUrl)),
             $this->pkwkController->findElement(WebDriverBy::linkText($targetLinkText))->getAttribute("href"));
     }
+
+    public function logoutMenuProvider() {
+        return [
+            ["FrontPage", "ログアウト", "index.php?plugin=loginform&pcmd=logout&page=FrontPage"],
+            ["階層1/日本語ページ", "ログアウト", "index.php?plugin=loginform&pcmd=logout&page=%E9%9A%8E%E5%B1%A41/%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%83%9A%E3%83%BC%E3%82%B8"],
+        ];
+    }
+
+    /**
+     * @dataProvider logoutMenuProvider
+     */
+    public function testLogout($pageName, $targetLinkText, $expectedUrl) {
+        global $PKWK_TESTUSERNAME;
+        global $PKWK_TESTUSERPASS;
+
+        $this->pkwkController->login($PKWK_TESTUSERNAME, $PKWK_TESTUSERPASS);
+        $this->pkwkController->readPage($pageName);
+        $this->assertEquals(
+            strval($this->pkwkController->getUrl($expectedUrl)),
+            $this->pkwkController->findElement(WebDriverBy::linkText($targetLinkText))->getAttribute("href"));
+    }
 }

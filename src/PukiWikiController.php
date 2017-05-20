@@ -96,23 +96,25 @@ class PukiWikiController
 
         if (isset($pagename)) {
             $this->getAndWait($this->getUrl(
-                'index.php?plugin=login&page=') . $this->encodeUrl($pagename));
+                'index.php?plugin=loginform&pcmd=login&page=') . $this->encodeUrl($pagename));
         } else {
-            $this->getAndWait($this->getUrl('index.php?plugin=login'));
+            $this->getAndWait($this->getUrl('index.php?plugin=loginform&pcmd=login'));
         }
 
         $this->driver->findElement(WebDriverBy::name("username"))
-            ->sendKeys($this->username);
+            ->sendKeys($username);
         $this->driver->findElement(WebDriverBy::name("password"))
-            ->sendKeys($this->password);
+            ->sendKeys($password);
+        $this->driver->findElement(WebDriverBy::name("loginform"))->submit();
+        $this->wait();
     }
 
     function logout($pagename = NULL) {
         if (isset($pagename)) {
             $this->getAndWait($this->getUrl(
-                'index.php?plugin=logout&page=') . $this->encodeUrl($pagename));
+                'index.php?plugin=loginform&pcmd=logout&page=') . $this->encodeUrl($pagename));
         } else {
-            $this->getAndWait($this->getUrl('index.php?plugin=logout'));
+            $this->getAndWait($this->getUrl('index.php?plugin=loginform&pcmd=logout'));
         }
     }
 
