@@ -46,4 +46,18 @@ class MenuUrlTest extends TestCase
             $this->pkwk_controller->getUrl('index.php?cmd=freeze&page=FreezeTestPage'),
             $this->pkwk_controller->findElement(WebDriverBy::linkText("凍結"))->getAttribute("href"));
     }
+
+    public function testDiffUrl() {
+        $this->pkwk_controller->readPage("FrontPage");
+        $this->assertEquals(
+            $this->pkwk_controller->getUrl('index.php?cmd=diff&page=FrontPage'),
+            $this->pkwk_controller->findElement(WebDriverBy::linkText("差分"))->getAttribute("href"));
+    }
+
+    public function testBackup() {
+        $this->pkwk_controller->readPage("FrontPage");
+        $this->assertEquals(
+            $this->pkwk_controller->getUrl('index.php?cmd=backup&page=FrontPage'),
+            $this->pkwk_controller->findElement(WebDriverBy::linkText("バックアップ"))->getAttribute("href"));
+    }
 }
