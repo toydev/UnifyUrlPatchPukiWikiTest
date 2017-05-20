@@ -12,26 +12,27 @@ Apache の mod_rewrite 等を使い短縮 URL 構成にする際に修正する�
  ** パッチ適用前・パッチ適用後の切り替えは手動で行うことを前提とする（対象を切り替えて同じテストを２回行うイメージ）。
  ** 標準状態で確認可能な URL を対象とする。
 == 修正箇所
-===lib/html.php
- * テンプレートに表示されるリンク群の定義
-|add|
-|backup|
-|copy|
-|diff|
-|edit|
-|filelist|
-|freeze|
-|help|
-|list|
-|new|
-|rdf|
-|recent|
-|rename|
-|rss|
-|rss10|
-|rss20|
-|search|
-|top|
-|unfreeze|
-|upload|
-|logout|
+===lib/html.php, skin/pukiwiki.skin.php
+ * lib/html.php の $_LINK の定義を元に skin/pukiwiki.skin.php でメニュー等の各種リンクが設定される。
+|=lib/html.php|=skin/pukiwiki.skin.php|=テスト|=パッチ|
+|add||||
+|backup||||
+|copy||||
+|diff||||
+|edit||||
+|filelist||||
+|freeze|凍結|済||
+|help||||
+|list||||
+|new||||
+|rdf||||
+|recent||||
+|rename||||
+|rss||||
+|rss10||||
+|rss20||||
+|search||||
+|top|トップ|済||
+|unfreeze||||
+|upload||||
+|logout||||
