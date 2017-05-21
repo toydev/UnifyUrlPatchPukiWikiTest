@@ -21,7 +21,8 @@ Apache の mod_rewrite 等を使い短縮 URL 構成にする際に修正する�
 ===lib/func.php
  * 一覧のリンク(page_list)
 |=対象|=テスト|=パッチ|
-|一覧|済||
+|read の場合|済|済|
+|read 以外の場合(例：backup)|済|済|
 
  * 単語検索の結果一覧のリンク(do_search)
 |=対象|=テスト|=パッチ|
