@@ -27,17 +27,19 @@ class PageListUrlTest extends TestCase
 
     public function pageListUrlProvider() {
         return [
-            ["FrontPage", "index.php?FrontPage"],
-            ["階層1/日本語ページ", "index.php?%E9%9A%8E%E5%B1%A41/%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%83%9A%E3%83%BC%E3%82%B8"],
+            ["list", "FrontPage", "index.php?FrontPage"],
+            ["backup", "FrontPage", "index.php?cmd=backup&page=FrontPage"],
+            ["list", "階層1/日本語ページ", "index.php?%E9%9A%8E%E5%B1%A41/%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%83%9A%E3%83%BC%E3%82%B8"],
+            ["backup", "階層1/日本語ページ", "index.php?cmd=backup&page=%E9%9A%8E%E5%B1%A41/%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%83%9A%E3%83%BC%E3%82%B8"],
         ];
     }
 
     /**
      * @dataProvider pageListUrlProvider
      */
-    public function testPageListUrl($pagename, $expectedUrl) {
+    public function testPageListUrl($cmd, $pagename, $expectedUrl) {
         $this->pkwkController->createPage($pagename, "BODY");
-        $this->pkwkController->getAndWait($this->pkwkController->getUrl('index.php?cmd=list'));
+        $this->pkwkController->getAndWait($this->pkwkController->getUrl("index.php?cmd=$cmd"));
         $this->assertEquals(
             strval($this->pkwkController->getUrl($expectedUrl)),
             $this->pkwkController->findElement(WebDriverBy::xpath(
