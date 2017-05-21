@@ -95,6 +95,22 @@ class MenuUrlTest extends TestCase
             $this->pkwkController->findElement(WebDriverBy::linkText($targetLinkText))->getAttribute("href"));
     }
 
+    public function filelistMenuProvider() {
+        return [
+            ["FrontPage", "ファイル名一覧", "index.php?cmd=filelist"],
+        ];
+    }
+
+    /**
+     * @dataProvider filelistMenuProvider
+     */
+    public function testFilelist($pageName, $targetLinkText, $expectedUrl) {
+        $this->pkwkController->getAndWait($this->pkwkController->getUrl("index.php?cmd=list"));
+        $this->assertEquals(
+            strval($this->pkwkController->getUrl($expectedUrl)),
+            $this->pkwkController->findElement(WebDriverBy::linkText($targetLinkText))->getAttribute("href"));
+    }
+
     public function loginMenuProvider() {
         return [
             ["FrontPage", "ログイン", "index.php?plugin=loginform&pcmd=login&page=FrontPage"],
