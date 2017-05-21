@@ -14,6 +14,19 @@ $PKWK_HOME_URL = "http://192.168.33.10/PukiWiki-1.5.1/";
 $PKWK_ADMINPASS = "pass";
 
 // Testuser
+// テスト対象の pukiwiki.ini.php の設定を以下に合わせる必要があります。
+/*
+$auth_users = array(
+	// Username => password
+	'testuser' => 'pass',
+);
+
+// Group definition
+$auth_groups = array(
+	// Groupname => group members(users)
+	'valid-user' => 'testuser', // Reserved 'valid-user' group contains all authenticated users
+);
+*/
 $PKWK_TESTUSERNAME = "testuser";
 $PKWK_TESTUSERPASS = "pass";
 
