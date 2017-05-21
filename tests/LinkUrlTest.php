@@ -44,4 +44,25 @@ class LinkUrlTest extends TestCase
                 "//div[@id='body']//a[@title='$pagename']"
             ))->getAttribute("href"));
     }
+
+    public function existingPageUrlProvider() {
+        return [
+            ["ExistingPage", "index.php?ExistingPage"],
+            ["階層1/日本語ページ", "index.php?%E9%9A%8E%E5%B1%A41/%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%83%9A%E3%83%BC%E3%82%B8"],
+        ];
+    }
+
+    /**
+     * @dataProvider existingPageUrlProvider
+     */
+    public function testExistingPageUrl($pagename, $expectedUrl) {
+        $this->pkwkController->createPage($pagename, "BODY");
+        $this->pkwkController->createPage("FrontPage", "[[$pagename]]");
+        $this->pkwkController->readPage("FrontPage");
+        $this->assertEquals(
+            strval($this->pkwkController->getUrl($expectedUrl)),
+            $this->pkwkController->findElement(WebDriverBy::xpath(
+                "//div[@id='body']//a[text()='$pagename']"
+            ))->getAttribute("href"));
+    }
 }
