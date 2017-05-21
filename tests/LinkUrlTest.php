@@ -65,4 +65,25 @@ class LinkUrlTest extends TestCase
                 "//div[@id='body']//a[text()='$pagename']"
             ))->getAttribute("href"));
     }
+
+    public function nonExistingPageUrlProvider() {
+        return [
+            ["FrontPage", "ExistingPage", "index.php?cmd=edit&page=ExistingPage&refer=FrontPage"],
+            ["リンク/テスト1", "リンク/テスト2", "index.php?cmd=edit&page=%E3%83%AA%E3%83%B3%E3%82%AF/%E3%83%86%E3%82%B9%E3%83%882&refer=%E3%83%AA%E3%83%B3%E3%82%AF%2F%E3%83%86%E3%82%B9%E3%83%881"],
+        ];
+    }
+
+    /**
+     * @dataProvider nonExistingPageUrlProvider
+     */
+    public function testNonExistingPageUrl($pagename1, $pagename2, $expectedUrl) {
+        $this->pkwkController->deletePage($pagename2);
+        $this->pkwkController->createPage($pagename1, "[[$pagename2]]");
+        $this->pkwkController->readPage($pagename1);
+        $this->assertEquals(
+            strval($this->pkwkController->getUrl($expectedUrl)),
+            $this->pkwkController->findElement(WebDriverBy::xpath(
+                "//div[@id='body']//span[@class='noexists']/a"
+            ))->getAttribute("href"));
+    }
 }
