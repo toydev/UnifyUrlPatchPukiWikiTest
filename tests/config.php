@@ -16,3 +16,8 @@ $PKWK_ADMINPASS = "pass";
 // Testuser
 $PKWK_TESTUSERNAME = "testuser";
 $PKWK_TESTUSERPASS = "pass";
+
+// Footnote test switch
+// テスト対象の default.ini.php の設定を以下に合わせる必要があります。
+// define('PKWK_ALLOW_RELATIVE_FOOTNOTE_ANCHOR', 0);
+$PKWK_FOOTNOTE_TEST_ENABLED = 1;
