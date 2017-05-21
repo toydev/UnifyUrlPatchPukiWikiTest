@@ -55,12 +55,12 @@ class ToolbarUrlTest extends TestCase
     /**
      * @dataProvider frontPageMenuProvider
      */
-    public function testFrontPageMenu($pageName, $targetLinkText, $expectedUrl) {
-        $this->pkwkController->createPage($pageName, "BODY");
-        $this->pkwkController->readPage($pageName);
+    public function testFrontPageMenu($pagename, $targetXpath, $expectedUrl) {
+        $this->pkwkController->createPage($pagename, "BODY");
+        $this->pkwkController->readPage($pagename);
         $this->assertEquals(
             strval($this->pkwkController->getUrl($expectedUrl)),
-            $this->pkwkController->findElement(WebDriverBy::xpath($targetLinkText))->getAttribute("href"));
+            $this->pkwkController->findElement(WebDriverBy::xpath($targetXpath))->getAttribute("href"));
     }
 
     public function freezeMenuProvider() {
@@ -73,12 +73,12 @@ class ToolbarUrlTest extends TestCase
     /**
      * @dataProvider freezeMenuProvider
      */
-    public function testFreeze($pageName, $targetLinkText, $expectedUrl) {
-        $this->pkwkController->createPage($pageName, "BODY");
-        $this->pkwkController->readPage($pageName);
+    public function testFreeze($pagename, $targetXpath, $expectedUrl) {
+        $this->pkwkController->createPage($pagename, "BODY");
+        $this->pkwkController->readPage($pagename);
         $this->assertEquals(
             strval($this->pkwkController->getUrl($expectedUrl)),
-            $this->pkwkController->findElement(WebDriverBy::xpath($targetLinkText))->getAttribute("href"));
+            $this->pkwkController->findElement(WebDriverBy::xpath($targetXpath))->getAttribute("href"));
     }
 
     public function unfreezeMenuProvider() {
@@ -91,12 +91,12 @@ class ToolbarUrlTest extends TestCase
     /**
      * @dataProvider unfreezeMenuProvider
      */
-    public function testUnfreeze($pageName, $targetLinkText, $expectedUrl) {
-        $this->pkwkController->createPage($pageName, "BODY");
-        $this->pkwkController->freezePage($pageName);
-        $this->pkwkController->readPage($pageName);
+    public function testUnfreeze($pagename, $targetXpath, $expectedUrl) {
+        $this->pkwkController->createPage($pagename, "BODY");
+        $this->pkwkController->freezePage($pagename);
+        $this->pkwkController->readPage($pagename);
         $this->assertEquals(
             strval($this->pkwkController->getUrl($expectedUrl)),
-            $this->pkwkController->findElement(WebDriverBy::xpath($targetLinkText))->getAttribute("href"));
+            $this->pkwkController->findElement(WebDriverBy::xpath($targetXpath))->getAttribute("href"));
     }
 }
