@@ -16,7 +16,7 @@ Apache の mod_rewrite 等を使い短縮 URL 構成にする際に修正する�
  * lib/html.php の $_LINK の定義を元に skin/pukiwiki.skin.php でメニュー等の各種リンクが設定される。
 |=lib/html.php|=skin/pukiwiki.skin.php|=テスト（メニュー）|=テスト（ツールバー）|=パッチ|
 |add|-|-|-|-|
-|backup|バックアップ|済|||
+|backup|バックアップ|済|済||
 |copy|複製|-|済||
 |diff|差分|済|済||
 |edit|編集|済|済||
