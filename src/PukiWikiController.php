@@ -57,7 +57,6 @@ class PukiWikiController
                 $this->driver->findElement(WebDriverBy::name("ok"))->click();
                 $this->wait();
             } catch (NoSuchElementException $e) {
-                return false;
             }
         }
 
