@@ -25,7 +25,7 @@ class MenuUrlTest extends TestCase
         $this->pkwkController->close();
     }    
 
-    public function frontPageMenuProvider() {
+    public function menuUrlProvider() {
         return [
             ["FrontPage", "トップ", "index.php?FrontPage"],
             ["FrontPage", "編集", "index.php?cmd=edit&page=FrontPage"],
@@ -48,9 +48,9 @@ class MenuUrlTest extends TestCase
     }
 
     /**
-     * @dataProvider frontPageMenuProvider
+     * @dataProvider menuUrlProvider
      */
-    public function testFrontPageMenu($pageName, $targetLinkText, $expectedUrl) {
+    public function testMenuUrl($pageName, $targetLinkText, $expectedUrl) {
         $this->pkwkController->createPage($pageName, "BODY");
         $this->pkwkController->readPage($pageName);
         $this->assertEquals(
@@ -58,7 +58,7 @@ class MenuUrlTest extends TestCase
             $this->pkwkController->findElement(WebDriverBy::linkText($targetLinkText))->getAttribute("href"));
     }
 
-    public function freezeMenuProvider() {
+    public function freezeMenuUrlProvider() {
         return [
             ["FreezeTestPage", "凍結", "index.php?cmd=freeze&page=FreezeTestPage"],
             ["階層1/日本語ページ", "凍結", "index.php?cmd=freeze&page=%E9%9A%8E%E5%B1%A41/%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%83%9A%E3%83%BC%E3%82%B8"],
@@ -66,9 +66,9 @@ class MenuUrlTest extends TestCase
     }
 
     /**
-     * @dataProvider freezeMenuProvider
+     * @dataProvider freezeMenuUrlProvider
      */
-    public function testFreeze($pageName, $targetLinkText, $expectedUrl) {
+    public function testFreezeUrl($pageName, $targetLinkText, $expectedUrl) {
         $this->pkwkController->createPage($pageName, "BODY");
         $this->pkwkController->readPage($pageName);
         $this->assertEquals(
@@ -76,7 +76,7 @@ class MenuUrlTest extends TestCase
             $this->pkwkController->findElement(WebDriverBy::linkText($targetLinkText))->getAttribute("href"));
     }
 
-    public function unfreezeMenuProvider() {
+    public function unfreezeMenuUrlProvider() {
         return [
             ["UnfreezeTestPage", "凍結解除", "index.php?cmd=unfreeze&page=UnfreezeTestPage"],
             ["階層1/日本語ページ", "凍結解除", "index.php?cmd=unfreeze&page=%E9%9A%8E%E5%B1%A41/%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%83%9A%E3%83%BC%E3%82%B8"],
@@ -84,9 +84,9 @@ class MenuUrlTest extends TestCase
     }
 
     /**
-     * @dataProvider unfreezeMenuProvider
+     * @dataProvider unfreezeMenuUrlProvider
      */
-    public function testUnfreeze($pageName, $targetLinkText, $expectedUrl) {
+    public function testUnfreezeUrl($pageName, $targetLinkText, $expectedUrl) {
         $this->pkwkController->createPage($pageName, "BODY");
         $this->pkwkController->freezePage($pageName);
         $this->pkwkController->readPage($pageName);
@@ -95,14 +95,14 @@ class MenuUrlTest extends TestCase
             $this->pkwkController->findElement(WebDriverBy::linkText($targetLinkText))->getAttribute("href"));
     }
 
-    public function filelistMenuProvider() {
+    public function filelistMenuUrlProvider() {
         return [
             ["FrontPage", "ファイル名一覧", "index.php?cmd=filelist"],
         ];
     }
 
     /**
-     * @dataProvider filelistMenuProvider
+     * @dataProvider filelistMenuUrlProvider
      */
     public function testFilelist($pageName, $targetLinkText, $expectedUrl) {
         $this->pkwkController->getAndWait($this->pkwkController->getUrl("index.php?cmd=list"));
@@ -111,7 +111,7 @@ class MenuUrlTest extends TestCase
             $this->pkwkController->findElement(WebDriverBy::linkText($targetLinkText))->getAttribute("href"));
     }
 
-    public function loginMenuProvider() {
+    public function loginMenuUrlProvider() {
         return [
             ["FrontPage", "ログイン", "index.php?plugin=loginform&pcmd=login&page=FrontPage"],
             ["階層1/日本語ページ", "ログイン", "index.php?plugin=loginform&pcmd=login&page=%E9%9A%8E%E5%B1%A41/%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%83%9A%E3%83%BC%E3%82%B8"],
@@ -119,9 +119,9 @@ class MenuUrlTest extends TestCase
     }
 
     /**
-     * @dataProvider loginMenuProvider
+     * @dataProvider loginMenuUrlProvider
      */
-    public function testLogin($pageName, $targetLinkText, $expectedUrl) {
+    public function testLoginUrl($pageName, $targetLinkText, $expectedUrl) {
         $this->pkwkController->logout();
         $this->pkwkController->readPage($pageName);
         $this->assertEquals(
@@ -129,7 +129,7 @@ class MenuUrlTest extends TestCase
             $this->pkwkController->findElement(WebDriverBy::linkText($targetLinkText))->getAttribute("href"));
     }
 
-    public function logoutMenuProvider() {
+    public function logoutMenuUrlProvider() {
         return [
             ["FrontPage", "ログアウト", "index.php?plugin=loginform&pcmd=logout&page=FrontPage"],
             ["階層1/日本語ページ", "ログアウト", "index.php?plugin=loginform&pcmd=logout&page=%E9%9A%8E%E5%B1%A41/%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%83%9A%E3%83%BC%E3%82%B8"],
@@ -137,9 +137,9 @@ class MenuUrlTest extends TestCase
     }
 
     /**
-     * @dataProvider logoutMenuProvider
+     * @dataProvider logoutMenuUrlProvider
      */
-    public function testLogout($pageName, $targetLinkText, $expectedUrl) {
+    public function testLogoutUrl($pageName, $targetLinkText, $expectedUrl) {
         global $PKWK_TESTUSERNAME;
         global $PKWK_TESTUSERPASS;
 
