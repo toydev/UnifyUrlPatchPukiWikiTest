@@ -25,6 +25,27 @@ class RelatedPageUrlTest extends TestCase
         $this->pkwkController->close();
     }    
 
+    public function backlinkUrlProvider() {
+        return [
+            ["FrontPage", "index.php?plugin=related&page=FrontPage"],
+            // このリンクには rawurlencode が使われているため / が %2F になっている
+            ["階層1/日本語ページ", "index.php?plugin=related&page=%E9%9A%8E%E5%B1%A41%2F%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%83%9A%E3%83%BC%E3%82%B8"],
+        ];
+    }
+
+    /**
+     * @dataProvider backlinkUrlProvider
+     */
+    public function testBacklinkUrl($pagename, $expectedUrl) {
+        $this->pkwkController->createPage($pagename, "BODY");
+        $this->pkwkController->readPage($pagename);
+        $this->assertEquals(
+            strval($this->pkwkController->getUrl($expectedUrl)),
+            $this->pkwkController->findElement(WebDriverBy::xpath(
+                "//h1[@class='title']/a"
+            ))->getAttribute("href"));
+    }
+
     public function relatedPageUrlProvider() {
         return [
             [
