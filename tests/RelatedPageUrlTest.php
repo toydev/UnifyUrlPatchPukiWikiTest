@@ -44,13 +44,18 @@ class RelatedPageUrlTest extends TestCase
      * @dataProvider relatedPageUrlProvider
      */
     public function testRelatedPageUrl($pagename1, $pagename2, $expectedUrl) {
-        $this->pkwkController->createPage($pagename1, "[[$pagename2]]");
+        $this->pkwkController->createPage($pagename1, "#related");
         $this->pkwkController->createPage($pagename2, "[[$pagename1]]");
         $this->pkwkController->readPage($pagename1);
         $this->assertEquals(
             strval($this->pkwkController->getUrl($expectedUrl)),
             $this->pkwkController->findElement(WebDriverBy::xpath(
-                "//div[@id='related']/a[text()='$pagename2']"
+                "//div[@id='body']//a[text()='$pagename2']"
+            ))->getAttribute("href"));
+        $this->assertEquals(
+            strval($this->pkwkController->getUrl($expectedUrl)),
+            $this->pkwkController->findElement(WebDriverBy::xpath(
+                "//div[@id='related']//a[text()='$pagename2']"
             ))->getAttribute("href"));
     }
 }
