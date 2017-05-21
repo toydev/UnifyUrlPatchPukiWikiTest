@@ -117,6 +117,13 @@ class PukiWikiController
         }
     }
 
+    function search($word) {
+        $this->getAndWait($this->getUrl('index.php?cmd=search'));
+        $this->driver->findElement(WebDriverBy::name("word"))
+            ->sendKeys($word)->submit();
+        $this->wait();
+    }
+
     function findElement($locator) {
         return $this->driver->findElement($locator);
     }
