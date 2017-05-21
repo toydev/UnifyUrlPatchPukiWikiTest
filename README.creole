@@ -4,8 +4,8 @@ PukiWiki の URL 生成ルールを一ヵ所に整理するパッチを作成す
 
 Apache の mod_rewrite 等を使い短縮 URL 構成にする際に修正する箇所を局所化することが主な目的です。
 == 方針
- * PukiWiki 内 URL を生成するメソッドを 1 つ実装する。仮に getPkwkUrl とする。
- * PukiWiki 内 URL の生成は全て getPkwkUrl によって行うよう修正する。該当する箇所は以下の通り。
+ * PukiWiki 内 URL を生成するメソッドを 1 つ実装する。仮に pkwk_uri とする。
+ * PukiWiki 内 URL の生成は全て pkwk_uri によって行うよう修正する。該当する箇所は以下の通り。
  ** get_script_uri の呼び出し箇所
  ** $script グローバル変数の使用箇所
  * Selenium による自動テストを実装し、パッチ適用前・パッチ適用後の動作互換性を確認できるようにする。
@@ -14,26 +14,26 @@ Apache の mod_rewrite 等を使い短縮 URL 構成にする際に修正する�
 == 修正箇所
 ===lib/html.php, skin/pukiwiki.skin.php
  * lib/html.php の $_LINK の定義を元に skin/pukiwiki.skin.php でメニュー等の各種リンクが設定される。
-|=lib/html.php|=skin/pukiwiki.skin.php|=テスト|=パッチ|
-|add||||
-|backup|バックアップ|済||
-|copy||||
-|diff|差分|済||
-|edit|編集|済||
-|filelist||||
-|freeze|凍結|済||
-|help|ヘルプ|済||
-|list|一覧|済||
-|new|新規|済||
-|rdf||||
-|recent|最新情報|済||
-|rename||||
-|rss||||
-|rss10||||
-|rss20||||
-|search|単語検索|済||
-|top|トップ|済||
-|unfreeze|凍結解除|済||
-|upload|添付|済||
-|login|ログイン|済||
-|logout|ログアウト|済||
+|=lib/html.php|=skin/pukiwiki.skin.php|=テスト（メニュー）|=テスト（ツールバー）|=パッチ|
+|add|-|-|-|済|
+|backup|バックアップ|済|済|済|
+|copy|複製|-|済|済|
+|diff|差分|済|済|済|
+|edit|編集|済|済|済|
+|filelist|ファイル名一覧|済|-|済|
+|freeze|凍結|済|済|済|
+|help|ヘルプ|済|済|済|
+|list|一覧|済|済|済|
+|new|新規|済|済|済|
+|rdf|-|-|-|済|
+|recent|最新情報|済|済|済|
+|rename|名前変更|-|済|済|
+|rss|-|-|-|済|
+|rss10|最終更新のRSS|-|済|済|
+|rss20|-|-|-|済|
+|search|単語検索|済|済|済|
+|top|トップ|済|済|済|
+|unfreeze|凍結解除|済|済|済|
+|upload|添付|済|済|済|
+|login|ログイン|済|-|済|
+|logout|ログアウト|済|-|済|
