@@ -20,7 +20,7 @@ Apache の mod_rewrite 等を使い短縮 URL 構成にする際に修正する�
 |copy|複製|-|済||
 |diff|差分|済|済||
 |edit|編集|済|済||
-|filelist|||||
+|filelist|ファイル名一覧|済|-||
 |freeze|凍結|済|済||
 |help|ヘルプ|済|済||
 |list|一覧|済|済||
