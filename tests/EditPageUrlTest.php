@@ -44,4 +44,27 @@ class EditPageUrlTest extends TestCase
             strval($this->pkwkController->getUrl($expectedUrl)),
             $this->pkwkController->findElement(WebDriverBy::linkText($targetLinkText))->getAttribute("href"));
     }
+
+    public function unfreezeUrlProvider() {
+        return [
+            ["FrontPage", "凍結解除", "index.php?cmd=unfreeze&page=FrontPage"],
+            // このリンクには rawurlencode が使われているため / が %2F になっている
+            ["階層1/日本語ページ", "凍結解除", "index.php?cmd=unfreeze&page=%E9%9A%8E%E5%B1%A41%2F%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%83%9A%E3%83%BC%E3%82%B8"],
+        ];
+    }
+
+    /**
+     * @dataProvider unfreezeUrlProvider
+     */
+    public function testUnfreezeUrl($pagename, $targetLinkText, $expectedUrl) {
+        $this->pkwkController->createPage($pagename, "BODY");
+        $this->pkwkController->freezePage($pagename);
+        $this->pkwkController->getAndWait($this->pkwkController->getUrl(
+            'index.php?cmd=edit&page=') . $this->pkwkController->encodeUrl($pagename));
+        $this->assertEquals(
+            strval($this->pkwkController->getUrl($expectedUrl)),
+            $this->pkwkController->findElement(WebDriverBy::xpath(
+                "//div[@id='body']//a[text()='$targetLinkText']"
+            ))->getAttribute("href"));
+    }
 }
