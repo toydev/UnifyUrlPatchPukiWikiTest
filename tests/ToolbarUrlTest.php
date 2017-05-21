@@ -41,6 +41,14 @@ class ToolbarUrlTest extends TestCase
             ["FrontPage", "//img[@title='最終更新']/parent::node()", "index.php?RecentChanges"],
             ["FrontPage", "//img[@title='ヘルプ']/parent::node()", "index.php?Help"],
             ["FrontPage", "//img[@title='最終更新のRSS']/parent::node()", "index.php?cmd=rss&ver=1.0"],
+            ["階層1/日本語ページ", "//img[@title='編集']/parent::node()", "index.php?cmd=edit&page=%E9%9A%8E%E5%B1%A41/%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%83%9A%E3%83%BC%E3%82%B8"],
+            ["階層1/日本語ページ", "//img[@title='差分']/parent::node()", "index.php?cmd=diff&page=%E9%9A%8E%E5%B1%A41/%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%83%9A%E3%83%BC%E3%82%B8"],
+            ["階層1/日本語ページ", "//img[@title='バックアップ']/parent::node()", "index.php?cmd=backup&page=%E9%9A%8E%E5%B1%A41/%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%83%9A%E3%83%BC%E3%82%B8"],
+            ["階層1/日本語ページ", "//img[@title='添付']/parent::node()", "index.php?plugin=attach&pcmd=upload&page=%E9%9A%8E%E5%B1%A41/%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%83%9A%E3%83%BC%E3%82%B8"],
+            ["階層1/日本語ページ", "//img[@title='複製']/parent::node()", "index.php?plugin=template&refer=%E9%9A%8E%E5%B1%A41/%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%83%9A%E3%83%BC%E3%82%B8"],
+            ["階層1/日本語ページ", "//img[@title='名前変更']/parent::node()", "index.php?plugin=rename&refer=%E9%9A%8E%E5%B1%A41/%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%83%9A%E3%83%BC%E3%82%B8"],
+            ["階層1/日本語ページ", "//img[@title='リロード']/parent::node()", "index.php?%E9%9A%8E%E5%B1%A41/%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%83%9A%E3%83%BC%E3%82%B8"],
+            ["階層1/日本語ページ", "//img[@title='新規']/parent::node()", "index.php?plugin=newpage&refer=%E9%9A%8E%E5%B1%A41/%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%83%9A%E3%83%BC%E3%82%B8"],
         ];
     }
 
